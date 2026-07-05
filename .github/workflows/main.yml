@@ -15,26 +15,24 @@ jobs:
         with:
           python-version: '3.11'
           
-      # 1. Adım: Flutter'ı manuel olarak kur (Soru sormaz)
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.0'
-          channel: 'stable'
           
-      # 2. Adım: Flet ve build araçlarını kur
       - name: Install Dependencies
         run: |
           pip install flet
           
-      # 3. Adım: APK Derle
       - name: Build APK
+        # Flutter'ın yüklü olduğunu flet'e belirtmek için path'i ekliyoruz
+        # Ayrıca FLET_NO_INPUT ile her türlü onay isteğini kapatıyoruz
+        env:
+          FLET_NO_INPUT: "true"
+          FLUTTER_HOME: ${{ steps.flutter.outputs.flutter-path }}
         run: |
           cd calcapp
-          flet build apk
-        env:
-          # Flet'in soru sormaması için en güçlü yöntem
-          FLET_NO_INPUT: "true"
+          flet build apk --skip-flutter-check
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
