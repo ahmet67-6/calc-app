@@ -9,14 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install Flet
-        run: pip install flet
+          
+      - name: Install Dependencies
+        run: |
+          pip install flet
+          
       - name: Build APK
-        run: flet build apk
+        run: |
+          # FLET_NO_INPUT ile etkileşimi tamamen kapatıyoruz
+          # --name ve --project-id ile yapılandırmayı otomatikleştiriyoruz
+          flet build apk --product-name "HesapMakinem" --project-id "com.ahmet.hesapmakinesi"
+        env:
+          FLET_NO_INPUT: "true"
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
