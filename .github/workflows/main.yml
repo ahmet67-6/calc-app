@@ -19,14 +19,16 @@ jobs:
         run: pip install flet
         
       - name: Build APK
-        # Artık parametre göndermiyoruz, flet.toml dosyasını okuyacak
-        run: flet build apk
+        # Flutter'ı otomatik onay ile kurması için bu ortam değişkenini ekliyoruz
         env:
           FLET_NO_INPUT: "true"
-
+        run: |
+          cd calcapp
+          flet build apk
+          
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: hesap-makinesi-apk
-          path: build/apk/app-release.apk
+          path: calcapp/build/apk/app-release.apk
           
