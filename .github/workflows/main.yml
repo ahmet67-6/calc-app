@@ -15,21 +15,14 @@ jobs:
         with:
           python-version: '3.11'
           
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.22.0'
-          channel: 'stable'
-          
       - name: Install Dependencies
-        run: |
-          pip install flet
+        run: pip install flet
           
       - name: Build APK
-        # Flutter'ı hazır kabul et ve etkileşimi tamamen kapat
         run: |
           cd calcapp
-          flet build apk --skip-flutter-check
+          # Onay mekanizmasını 'yes' cevabıyla besliyoruz (yes | komut)
+          yes | flet build apk
         env:
           FLET_NO_INPUT: "true"
 
