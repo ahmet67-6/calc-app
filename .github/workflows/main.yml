@@ -9,24 +9,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
+          
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.0'
+          channel: 'stable'
+          
       - name: Install Dependencies
-        run: pip install flet
-
+        run: |
+          pip install flet
+          
       - name: Build APK
-        env:
-          FLET_NO_INPUT: "true"
+        # Flutter'ı hazır kabul et ve etkileşimi tamamen kapat
         run: |
           cd calcapp
-          yes | flet build apk --skip-flutter-check
+          flet build apk --skip-flutter-check
+        env:
+          FLET_NO_INPUT: "true"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: hesap-makinesi-apk
           path: calcapp/build/apk/app-release.apk
+          
