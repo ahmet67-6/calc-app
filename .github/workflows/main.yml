@@ -23,7 +23,7 @@ jobs:
           FLET_NO_INPUT: "true"
         run: |
           cd calcapp
-          yes | flet build apk --skip-flutter-check
+          yes | flet build apk
           echo "== APK dosyaları =="
           find . -name "*.apk"
 
