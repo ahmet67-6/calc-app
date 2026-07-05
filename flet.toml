@@ -1,0 +1,6 @@
+[project]
+name = "hesap_makinesi"
+display_name = "Hesap Makinem"
+description = "Python Flet Hesap Makinesi"
+module = "main.py"
+project_id = "com.ahmet.hesapmakinesi"
